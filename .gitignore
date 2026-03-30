@@ -1,68 +1,52 @@
 # macOS
 .DS_Store
-.AppleDouble
-.LSOverride
-Icon
 ._*
-.Spotlight-V100
-.Trashes
-Library
 
 # Environment files
 .env
-.env.local
-.env.*.local
 *.env
 
 # API keys and secrets
 *.pem
 *.key
-*.cert
-*.p12
-*.pfx
-*_rsa
-*_rsa.pub
-*.crt
-*.cer
-
-# Logs
-*.log
-logs/
-Library/Logs/
+client_secret*.json
+token.json
 
 # Node/Bun
 node_modules/
-.npm
-.yarn
-.pnp.*
 
 # IDE
 .vscode/
 .idea/
-*.swp
-*.swo
-*~
 
-# Temporary files
-tmp/
-temp/
-*.tmp
+# Python
+__pycache__/
+*.pyc
 
-# Build outputs
-dist/
-build/
-out/
+# Sensitive / Personal (replace with your own)
+PAI/USER/FINANCES/
+PAI/USER/BUSINESS/
+PAI/USER/WORK/
+PAI/USER/PROJECTS/
+PAI/workspace/
 
-# Cache
-.cache/
-*.cache
+# Runtime / Derived data
+MEMORY/WORK/*/PRD.md
+MEMORY/LEARNING/REFLECTIONS/*.jsonl
+MEMORY/RELATIONSHIP/*.md
+memsearch-enhancement/scripts/__pycache__/
 
-# Personal/Private data
-private/
-secrets/
-credentials/
+# Claude Code session data (not part of PAI system)
+history.jsonl
+projects/
+debug/
+plans/
+paste-cache/
+file-history/
+image-cache/
 
-# PAI Update System (sideloading)
-.claude/pai_updates/
-.claude/pai_backups/
-.claude/.pai-sync-history
+# Memsearch derived (rebuildable from markdown)
+access-log.jsonl
+chunk-weights.json
+knowledge-graph.json
+*.memsearch/milvus.db

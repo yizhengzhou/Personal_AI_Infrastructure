@@ -1,0 +1,166 @@
+%%{ init: { 'theme': 'base', 'themeVariables': { 'primaryColor': '#1a1a2e', 'primaryTextColor': '#e0e0e0', 'primaryBorderColor': '#4a4a6a', 'lineColor': '#7c7caa', 'secondaryColor': '#16213e', 'tertiaryColor': '#0f3460', 'background': '#0d0d1a', 'mainBkg': '#1a1a2e', 'nodeBorder': '#4a4a6a', 'clusterBkg': '#12122a', 'clusterBorder': '#3a3a5c', 'titleColor': '#e0e0e0', 'edgeLabelBackground': '#1a1a2e' } } }%%
+
+flowchart TD
+
+%% ═══════════════════════════════════════
+%% SESSION BOOTSTRAP
+%% ═══════════════════════════════════════
+subgraph BOOT["🚀 Session Bootstrap"]
+    direction TB
+    CC["Claude Code CLI"]
+    CM["CLAUDE.md<br/><i>PAI 4.0.3 載入</i>"]
+    CR["CONTEXT_ROUTING.md<br/><i>按需載入專題文件</i>"]
+    HK["Hooks<br/><i>SessionStart 事件</i><br/>KittyEnvPersist · TabTitle · StateInit"]
+    CC -->|session 啟動| CM
+    CM -->|需要上下文時| CR
+    CC -->|event: SessionStart| HK
+end
+
+%% ═══════════════════════════════════════
+%% MODE ROUTER
+%% ═══════════════════════════════════════
+subgraph ROUTER["⚡ Mode Classification"]
+    direction TB
+    CLASS{"每次請求<br/>分類模式"}
+    MINIMAL["═ MINIMAL ═<br/>問候 · 評分 · 確認"]
+    NATIVE["═ NATIVE ═<br/>單步快速任務<br/>&lt; 2 min"]
+    ALGO["═ ALGORITHM ═<br/>多步複雜任務"]
+    CLASS -->|greetings / ratings| MINIMAL
+    CLASS -->|single-step| NATIVE
+    CLASS -->|everything else| ALGO
+end
+
+CM --> CLASS
+
+%% ═══════════════════════════════════════
+%% ALGORITHM ENGINE
+%% ═══════════════════════════════════════
+subgraph ALG["🧠 Algorithm v3.7.0 — The Centerpiece"]
+    direction TB
+    LOAD["載入 Algorithm/v3.7.0.md"]
+    ISC["ISC 分解<br/><i>Current State → Ideal State</i><br/>原子化可驗證標準"]
+    EFFORT{"Effort Level"}
+    STD["Standard &lt;2m<br/>8-16 ISC"]
+    EXT["Extended &lt;8m<br/>16-32 ISC"]
+    ADV["Advanced &lt;16m<br/>24-48 ISC"]
+    DEEP["Deep &lt;32m<br/>40-80 ISC"]
+    COMP["Comprehensive &lt;120m<br/>64-150 ISC"]
+    PRD["PRD.md<br/><i>Single Source of Truth</i><br/>YAML frontmatter + ISC + Decisions"]
+    PHASE["Phase Flow:<br/>analyze → plan → execute → verify → complete"]
+
+    LOAD --> ISC
+    ISC --> EFFORT
+    EFFORT --> STD & EXT & ADV & DEEP & COMP
+    STD & EXT & ADV & DEEP & COMP --> PRD
+    PRD --> PHASE
+end
+
+ALGO --> LOAD
+
+%% ═══════════════════════════════════════
+%% SKILLS
+%% ═══════════════════════════════════════
+subgraph SKILLS["🎯 Skill System — 自然語言觸發"]
+    direction TB
+    TRIGGER["使用者意圖 → 自動匹配 Skill"]
+    SYS_SK["System Skills<br/><i>TitleCase · 可分享</i><br/>Research · Browser · Agents<br/>CreateSkill · ContentAnalysis"]
+    PER_SK["Personal Skills<br/><i>_UNDERSCORE · 不分享</i><br/>_Metrics · _Personal"]
+    TRIGGER --> SYS_SK & PER_SK
+end
+
+PHASE -->|需要能力時| TRIGGER
+
+%% ═══════════════════════════════════════
+%% AGENT SYSTEM
+%% ═══════════════════════════════════════
+subgraph AGENTS["🤖 Agent System — 平行工作"]
+    direction TB
+    DISPATCH["Task Tool 派發"]
+    SA1["Subagent<br/><i>general-purpose</i>"]
+    SA2["Subagent<br/><i>Explore / Architect</i>"]
+    SA3["Subagent<br/><i>Engineer / Designer</i>"]
+    NAMED["Named Agents<br/><i>Serena · Marcus · Rook</i><br/>持久身份 + 聲音"]
+    CUSTOM["Custom Agents<br/><i>ComposeAgent 動態組合</i><br/>Trait → Personality + Voice"]
+    DISPATCH --> SA1 & SA2 & SA3
+    DISPATCH --> NAMED
+    DISPATCH --> CUSTOM
+end
+
+PHASE -->|平行執行| DISPATCH
+TRIGGER -->|Agents skill| DISPATCH
+
+%% ═══════════════════════════════════════
+%% MEMORY SYSTEM
+%% ═══════════════════════════════════════
+subgraph MEM["💾 Memory System v7.0 — 跨 Session 持久化"]
+    direction TB
+    WORK["WORK/<br/><i>PRD.md per task</i><br/>timestamp_slug 目錄"]
+    LEARN["LEARNING/<br/>├─ SYSTEM/ · ALGORITHM/<br/>├─ FAILURES/ 低評分全文<br/>├─ SYNTHESIS/ 週期模式<br/>├─ REFLECTIONS/<br/>└─ SIGNALS/ ratings.jsonl"]
+    STATE["STATE/<br/>work.json · session-names.json<br/>events.jsonl · algorithm-streak"]
+    RESEARCH["RESEARCH/<br/><i>Agent 輸出存檔</i>"]
+    SECURITY["SECURITY/<br/><i>安全稽核事件</i>"]
+end
+
+PRD -->|寫入| WORK
+PHASE -->|學習信號| LEARN
+HK -->|事件流| STATE
+SA1 & SA2 & SA3 -->|輸出| RESEARCH
+
+%% ═══════════════════════════════════════
+%% HOOKS — EVENT-DRIVEN AUTOMATION
+%% ═══════════════════════════════════════
+subgraph HOOKS["⚙️ Hook System — 事件驅動自動化"]
+    direction LR
+    H_PRD["PRDSync<br/><i>PostToolUse</i><br/>PRD→work.json"]
+    H_RATE["RatingCapture<br/><i>PostResponse</i>"]
+    H_TAB["TabTitle<br/><i>PostToolUse</i>"]
+    H_LEARN["WorkCompletionLearning<br/><i>PostResponse</i>"]
+end
+
+PHASE -.->|PostToolUse| H_PRD & H_TAB
+PHASE -.->|PostResponse| H_RATE & H_LEARN
+H_PRD -.-> STATE
+H_RATE -.-> LEARN
+H_LEARN -.-> LEARN
+
+%% ═══════════════════════════════════════
+%% EXTERNAL CHANNELS
+%% ═══════════════════════════════════════
+subgraph EXT_CH["📡 External Channels"]
+    direction LR
+    TG1["@YourPluginBot<br/><i>Official Plugin</i>"]
+    TG2["@YourStandaloneBot<br/><i>Standalone Bot</i>"]
+    SCHED["LaunchAgent 排程<br/>08:30 Daily Brief<br/>09:00 Bookmark Review<br/>21:00 Thought Prompt"]
+end
+
+CC -.->|Telegram channel| TG1
+TG2 -.->|定時觸發| SCHED
+
+%% ═══════════════════════════════════════
+%% CROSS-SESSION FEEDBACK LOOP
+%% ═══════════════════════════════════════
+LEARN -->|"累積證據 → 改進 Algorithm"| LOAD
+WORK -->|"歷史 PRD → 新 session 上下文"| CR
+
+%% ═══════════════════════════════════════
+%% STYLES
+%% ═══════════════════════════════════════
+classDef boot fill:#1b2838,stroke:#4fc3f7,stroke-width:2px,color:#e0e0e0
+classDef router fill:#1a2744,stroke:#ffd54f,stroke-width:2px,color:#e0e0e0
+classDef algo fill:#1c2a1c,stroke:#66bb6a,stroke-width:2px,color:#e0e0e0
+classDef skill fill:#2a1c2a,stroke:#ce93d8,stroke-width:2px,color:#e0e0e0
+classDef agent fill:#2a261c,stroke:#ffb74d,stroke-width:2px,color:#e0e0e0
+classDef mem fill:#1c1c2e,stroke:#7986cb,stroke-width:2px,color:#e0e0e0
+classDef hook fill:#2e1c1c,stroke:#ef9a9a,stroke-width:2px,color:#e0e0e0
+classDef ext fill:#1c2e2e,stroke:#80cbc4,stroke-width:2px,color:#e0e0e0
+classDef decision fill:#2a2a1c,stroke:#ffd54f,stroke-width:2px,color:#ffd54f
+
+class CC,CM,CR,HK boot
+class CLASS,MINIMAL,NATIVE,ALGO router
+class LOAD,ISC,EFFORT,STD,EXT,ADV,DEEP,COMP,PRD,PHASE algo
+class TRIGGER,SYS_SK,PER_SK skill
+class DISPATCH,SA1,SA2,SA3,NAMED,CUSTOM agent
+class WORK,LEARN,STATE,RESEARCH,SECURITY mem
+class H_PRD,H_RATE,H_TAB,H_LEARN hook
+class TG1,TG2,SCHED ext
+class CLASS,EFFORT decision
