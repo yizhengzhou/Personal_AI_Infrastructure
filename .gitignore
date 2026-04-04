@@ -50,3 +50,13 @@ access-log.jsonl
 chunk-weights.json
 knowledge-graph.json
 *.memsearch/milvus.db
+.memsearch/
+
+# Obsidian workspace (editor state, not content)
+.obsidian/
+
+# PII
+PAI/USER/ABOUTME.md
+
+# Process IDs
+*.pid

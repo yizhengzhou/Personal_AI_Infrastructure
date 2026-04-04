@@ -1,0 +1,58 @@
+
+[38;2;51;65;85m┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓[0m
+
+                      [38;2;30;58;138mP[0m[38;2;59;130;246mA[0m[38;2;147;197;253mI[0m [38;2;51;65;85m|[0m [38;2;100;116;139mPersonal AI Infrastructure[0m
+
+                     [3m[38;2;147;197;253m"Magnifying human capabilities..."[0m
+
+
+           [38;2;30;58;138m████████████████[0m[38;2;147;197;253m████[0m   [38;2;51;65;85m│[0m  [38;2;100;116;139m"[0m[38;2;147;197;253mLean and Mean[0m[38;2;100;116;139m"[0m
+           [38;2;30;58;138m████████████████[0m[38;2;147;197;253m████[0m   [38;2;51;65;85m│[0m  [38;2;51;65;85m────────────────────────[0m
+           [38;2;30;58;138m████[0m        [38;2;30;58;138m████[0m[38;2;147;197;253m████[0m   [38;2;51;65;85m│[0m  [38;2;30;58;138m⬢[0m  [38;2;100;116;139mPAI[0m       [38;2;203;213;225mv4.0.3[0m
+           [38;2;30;58;138m████[0m        [38;2;30;58;138m████[0m[38;2;147;197;253m████[0m   [38;2;51;65;85m│[0m  [38;2;30;58;138m⚙[0m  [38;2;100;116;139mAlgo[0m      [38;2;203;213;225mv3.7.0[0m
+           [38;2;30;58;138m████████████████[0m[38;2;147;197;253m████[0m   [38;2;51;65;85m│[0m  [38;2;147;197;253m✦[0m  [38;2;100;116;139mInstaller[0m [38;2;203;213;225mv4.0[0m
+           [38;2;30;58;138m████████████████[0m[38;2;147;197;253m████[0m   [38;2;51;65;85m│[0m  [38;2;51;65;85m────────────────────────[0m
+           [38;2;30;58;138m████[0m        [38;2;59;130;246m████[0m[38;2;147;197;253m████[0m   [38;2;51;65;85m│[0m
+           [38;2;30;58;138m████[0m        [38;2;59;130;246m████[0m[38;2;147;197;253m████[0m   [38;2;51;65;85m│[0m  [38;2;147;197;253m✦  Lean and Mean[0m
+           [38;2;30;58;138m████[0m        [38;2;59;130;246m████[0m[38;2;147;197;253m████[0m   [38;2;51;65;85m│[0m
+           [38;2;30;58;138m████[0m        [38;2;59;130;246m████[0m[38;2;147;197;253m████[0m   [38;2;51;65;85m│[0m
+
+
+                       [38;2;51;65;85m→[0m [38;2;59;130;246mgithub.com/danielmiessler/PAI[0m
+
+[38;2;51;65;85m┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛[0m
+
+  [38;2;59;130;246mℹ[0m Platform: macOS (arm64)
+  [38;2;34;197;94m✓[0m curl found
+  [38;2;34;197;94m✓[0m Git found: git version 2.39.5 (Apple Git-154)
+  [38;2;34;197;94m✓[0m Bun found: v1.2.18
+  [38;2;34;197;94m✓[0m Claude Code found
+  [38;2;59;130;246mℹ[0m Launching installer...
+
+Installing GUI dependencies (first run only)...
+
+npm warn deprecated boolean@3.2.0: Package no longer supported. Contact Support at https://www.npmjs.com/support for more info.
+
+added 70 packages, and audited 71 packages in 6s
+
+17 packages are looking for funding
+  run `npm fund` for details
+
+1 moderate severity vulnerability
+
+To address all issues (including breaking changes), run:
+  npm audit fix --force
+
+Run `npm audit` for details.
+Cleared macOS quarantine flags.
+
+Starting PAI Installer GUI...
+
+
+> pai-installer@4.0.3 start
+> electron .
+
+PAI Installer server running on http://127.0.0.1:1337/
+2026-03-07 10:07:12.802 Electron[54760:1471381] TSM AdjustCapsLockLEDForKeyTransitionHandling - _ISSetPhysicalKeyboardCapsLockLED Inhibit
+
+[PAI Installer] Shutting down due to inactivity.

@@ -6,7 +6,9 @@
 
 **Location:** `~/.claude/hooks/`
 **Configuration:** `~/.claude/settings.json`
-**Status:** Active - 20 hooks running in production
+**Status:** Active — see Actual vs Documented table below
+
+> **⚠️ Reality Check (2026-04-04):** This document previously described 20+ hooks. Most were aspirational — the actual `.hook.ts` scripts were never built. Only `hooks/lib/` utilities exist. The hooks that actually run are configured in `settings.json` as inline shell commands or scripts in `hooks/`. See the table below for ground truth.
 
 ---
 
