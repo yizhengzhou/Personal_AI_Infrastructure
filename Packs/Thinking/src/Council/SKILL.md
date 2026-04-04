@@ -1,10 +1,6 @@
 ---
 name: Council
-description: >-
-  Multi-perspective deliberation with visible transcripts. USE WHEN council,
-  debate, roundtable, 圓桌, perspectives, weigh options, deliberate, multiple
-  viewpoints. Three modes: Debate (engineering decisions), Quick (sanity check),
-  Roundtable (philosophical/conceptual exploration).
+description: Multi-agent debate with visible transcripts where agents respond to each other. USE WHEN council, debate, perspectives, weigh options, deliberate, multiple viewpoints. Unlike RedTeam (adversarial), Council is collaborative-adversarial.
 ---
 
 ## Customization
@@ -14,68 +10,97 @@ description: >-
 
 If this directory exists, load and apply any PREFERENCES.md, configurations, or resources found there. These override default behavior. If the directory does not exist, proceed with skill defaults.
 
+
+## 🚨 MANDATORY: Voice Notification (REQUIRED BEFORE ANY ACTION)
+
+**You MUST send this notification BEFORE doing anything else when this skill is invoked.**
+
+1. **Send voice notification**:
+   ```bash
+   curl -s -X POST http://localhost:8888/notify \
+     -H "Content-Type: application/json" \
+     -d '{"message": "Running the WORKFLOWNAME workflow in the Council skill to ACTION"}' \
+     > /dev/null 2>&1 &
+   ```
+
+2. **Output text notification**:
+   ```
+   Running the **WorkflowName** workflow in the **Council** skill to ACTION...
+   ```
+
+**This is not optional. Execute this curl command immediately upon skill invocation.**
+
 # Council Skill
 
-Multi-perspective deliberation system where specialized voices discuss topics in rounds, respond to each other's points, and surface insights through intellectual friction.
+Multi-agent debate system where specialized agents discuss topics in rounds, respond to each other's points, and surface insights through intellectual friction.
 
 **Key Differentiator from RedTeam:** Council is collaborative-adversarial (debate to find best path), while RedTeam is purely adversarial (attack the idea). Council produces visible conversation transcripts; RedTeam produces steelman + counter-argument.
 
+
 ## Workflow Routing
 
-| Trigger | Workflow | Description |
-|---------|----------|-------------|
-| Engineering/design decisions, code review, architecture choices | `Workflows/Debate.md` | Structured 3-round debate with domain experts, convergent (30-90s) |
-| Fast sanity check, quick feedback | `Workflows/Quick.md` | Single-round parallel perspectives, fast (10-20s) |
-| Philosophy, society, culture, conceptual exploration, 圓桌 | `Workflows/Roundtable.md` | Dialectical exploration with real historical/contemporary figures, divergent, user-controlled |
-| Pure adversarial analysis | RedTeam skill | (separate skill) |
+Route to the appropriate workflow based on the request.
 
-**Quick heuristic:** Has a "better answer" → Debate. Need a sanity check → Quick. Has "no answer, only structure" → Roundtable.
+**When executing a workflow, output this notification directly:**
+
+```
+Running the **WorkflowName** workflow in the **Council** skill to ACTION...
+```
+
+| Trigger | Workflow |
+|---------|----------|
+| Full structured debate (3 rounds, visible transcript) | `Workflows/Debate.md` |
+| Quick consensus check (1 round, fast) | `Workflows/Quick.md` |
+| Pure adversarial analysis | RedTeam skill |
 
 ## Quick Reference
 
-| Workflow | Purpose | Rounds | Output | User in loop? |
-|----------|---------|--------|--------|---------------|
-| **DEBATE** | Find best path among options | 3 (fixed) | Complete transcript + synthesis | No |
-| **QUICK** | Fast perspective check | 1 (fixed) | Initial positions + go/no-go | No |
-| **ROUNDTABLE** | Map the shape of a question | User-controlled | Knowledge network + open questions | Yes (可/止/深入/引入) |
+| Workflow | Purpose | Rounds | Output |
+|----------|---------|--------|--------|
+| **DEBATE** | Full structured discussion | 3 | Complete transcript + synthesis |
+| **QUICK** | Fast perspective check | 1 | Initial positions only |
+
+## Context Files
+
+| File | Content |
+|------|---------|
+| `CouncilMembers.md` | Agent roles, perspectives, voice mapping |
+| `RoundStructure.md` | Three-round debate structure and timing |
+| `OutputFormat.md` | Transcript format templates |
 
 ## Core Philosophy
 
-**Origin:** Best decisions emerge from diverse perspectives challenging each other. Not just collecting opinions — genuine intellectual friction where experts respond to each other's actual points.
+**Origin:** Best decisions emerge from diverse perspectives challenging each other. Not just collecting opinions - genuine intellectual friction where experts respond to each other's actual points.
 
-- **Debate** is collaborative-adversarial: friction to converge on a recommendation
-- **Quick** is parallel-assessment: fast multi-angle check
-- **Roundtable** is exploratory-adversarial: friction to reveal the structure of the problem
-
-**Speed:** Parallel execution within rounds, sequential between rounds. A 3-round debate of 4 agents = 12 agent calls but only 3 sequential waits.
+**Speed:** Parallel execution within rounds, sequential between rounds. A 3-round debate of 4 agents = 12 agent calls but only 3 sequential waits. Complete in 30-90 seconds.
 
 ## Examples
 
 ```
 "Council: Should we use WebSockets or SSE?"
-→ DEBATE workflow → 3-round transcript
+-> Invokes DEBATE workflow -> 3-round transcript
 
 "Quick council check: Is this API design reasonable?"
-→ QUICK workflow → Fast perspectives
+-> Invokes QUICK workflow -> Fast perspectives
 
 "Council with security: Evaluate this auth approach"
-→ DEBATE with Security agent added
-
-"圓桌：文學作品能否成為 agent skill？"
-→ ROUNDTABLE workflow → Interactive multi-round exploration
+-> DEBATE with Security agent added
 ```
 
 ## Integration
 
 **Works well with:**
-- **RedTeam** — Pure adversarial attack after collaborative discussion
-- **Development** — Before major architectural decisions
-- **Research** — Gather context before convening the council
+- **RedTeam** - Pure adversarial attack after collaborative discussion
+- **Development** - Before major architectural decisions
+- **Research** - Gather context before convening the council
 
 ## Best Practices
 
-1. Use QUICK for sanity checks, DEBATE for important decisions, ROUNDTABLE for open questions
+1. Use QUICK for sanity checks, DEBATE for important decisions
 2. Add domain-specific experts as needed (security for auth, etc.)
-3. Review the transcript — insights are in the responses, not just positions
-4. Trust multi-agent convergence in DEBATE; trust divergence in ROUNDTABLE
-5. In ROUNDTABLE: the open questions at the end are often more valuable than the discussion itself
+3. Review the transcript - insights are in the responses, not just positions
+4. Trust multi-agent convergence when it occurs
+
+---
+
+**Last Updated:** 2025-12-20
