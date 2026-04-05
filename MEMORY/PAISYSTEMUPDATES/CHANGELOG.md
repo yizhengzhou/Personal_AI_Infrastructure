@@ -5,6 +5,73 @@
 
 ---
 
+## 2026-04-04 (Session 2)
+
+### Obsidian Mind 機制移植
+
+**來源：** [breferrari/obsidian-mind](https://github.com/breferrari/obsidian-mind) — 一個用 Obsidian vault 做 Claude Code 長期記憶的系統。
+
+**移植了三個機制：**
+
+1. **UserPromptSubmit 分類 hook** — 每則訊息自動偵測類型（決策/想法/反饋/人物/學習），注入路由提示讓 AI 知道該存到哪裡
+   - Script: `~/.claude/hooks/classify-message.sh`
+   - 純文字匹配，無 LLM 呼叫，<100ms
+
+2. **Vault-first memory 原則** — CLAUDE.md 新增規則：所有持久知識存在 YZ-Brain vault，memory files 只存指標
+   - 決策 → `wiki/` 或專案文檔
+   - 想法 → `inbox/`
+   - 學習 → `wiki/`
+
+3. **/dump 指令** — 自由腦倒，一口氣說完，AI 自動分類、歸檔、建立 wikilink
+   - Command: `~/.claude/commands/dump.md`
+
+**不移植的：** Performance graph、brag doc、review brief、Slack 整合（上班族績效管理，不適用一人公司）
+
+---
+
+### Batch Implementation（D1/D2/D3/D5 共 7 項）
+
+**完成項目：**
+
+| 項目 | 產出 |
+|------|------|
+| D3-1 Git Activity 每日收集 | `scripts/daily-git-activity.sh` + LaunchAgent 08:00 |
+| D2-6 Business Knowledge Files | COMPANY.md, CLIENTS.md, COSTS.md |
+| D5-1 Session-log 品質修復 | update-relationship.sh transcript path fallback |
+| D1-6 Wiki 編譯引擎（Karpathy） | `scripts/wiki-compile.sh` + 10 篇文章 |
+| D1-8 Wiki 索引維護 | `wiki/_index.md` 自動生成 |
+| D1-10 Knowledge Linting | `scripts/wiki-lint.sh` |
+| D1-LaunchAgent | `com.june-wiki-compile.plist` 09:30 daily |
+
+**實作率：** 0% → 22%（7/32 項完成）
+
+---
+
+### Repo Consolidation
+
+- `~/.claude/PAI/` 改為 symlink → `~/Documents/Project/Personal_AI_Infrastructure/PAI/`
+- GitHub push: `b61f6a7`
+- ABOUTME.md 從 git tracking 移除（PII 保護）
+- DAIDENTITY.md 移除醫療細節
+
+---
+
+### Upstream Merge
+
+- 合併上游 PAI 23 個 commit
+- 新增 12 個 Skill Packs（47 sub-skills）
+- PAI on Pi v1.0.0
+- 學習文件：`~/Documents/YZ-Brain/learning/PAI-upstream-packs-guide.md`
+
+---
+
+### Morning Brief 擴充
+
+- GitHub Trending 每日掃描（三方向：興趣主題、專案相關、熱門）
+- 直接嵌入 `daily-brief.sh`，不需額外 LaunchAgent
+
+---
+
 ## Dimensions Overview (Proactive Self-Learning Upgrade)
 
 | Dimension | 主題 | 狀態 | Spec 位置 |
